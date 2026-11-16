@@ -53,7 +53,25 @@ export default function StandaloneAdminBookingsPage() {
   };
 
   useEffect(() => {
-    loadData();
+    let mounted = true;
+    (async () => {
+      const connected = await checkBackendConnection();
+      if (!mounted) return;
+      setIsBackendConnected(connected);
+
+      const [bookingsData, roomsData] = await Promise.all([
+        getBookings(),
+        getRooms(),
+      ]);
+
+      if (!mounted) return;
+      setBookings(bookingsData);
+      setRooms(roomsData);
+      setLoading(false);
+    })();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const handleStatusChange = async (
@@ -222,7 +240,7 @@ export default function StandaloneAdminBookingsPage() {
                         <select
                           value={b.status}
                           onChange={(e) =>
-                            handleStatusChange(b.id, e.target.value as any)
+                            handleStatusChange(b.id, e.target.value as Booking["status"])
                           }
                           className={`text-[11px] font-semibold uppercase px-2.5 py-1 rounded-lg border focus:outline-none cursor-pointer ${
                             b.status === "confirmed"

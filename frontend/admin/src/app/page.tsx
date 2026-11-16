@@ -47,12 +47,34 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    loadData();
+    let mounted = true;
+    (async () => {
+      const connected = await checkBackendConnection();
+      if (!mounted) return;
+      setIsBackendConnected(connected);
+
+      const [roomsData, bookingsData, statsData] = await Promise.all([
+        getRooms(),
+        getBookings(),
+        getDashboardStats(),
+      ]);
+
+      if (!mounted) return;
+      setRooms(roomsData);
+      setBookings(bookingsData);
+      setStats(statsData);
+      setLoading(false);
+    })();
+
     const interval = setInterval(async () => {
       const connected = await checkBackendConnection();
-      setIsBackendConnected(connected);
+      if (mounted) setIsBackendConnected(connected);
     }, 10000);
-    return () => clearInterval(interval);
+
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   const pendingCount = stats?.pendingInquiries ?? bookings.filter((b) => b.status === "pending").length;

@@ -57,7 +57,25 @@ export default function StandaloneAdminRoomsPage() {
   };
 
   useEffect(() => {
-    loadData();
+    let mounted = true;
+    (async () => {
+      const connected = await checkBackendConnection();
+      if (!mounted) return;
+      setIsBackendConnected(connected);
+
+      const [roomsData, bookingsData] = await Promise.all([
+        getRooms(),
+        getBookings(),
+      ]);
+
+      if (!mounted) return;
+      setRooms(roomsData);
+      setPendingCount(bookingsData.filter((b) => b.status === "pending").length);
+      setLoading(false);
+    })();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -393,7 +411,7 @@ export default function StandaloneAdminRoomsPage() {
                   <select
                     value={form.category}
                     onChange={(e) =>
-                      setForm({ ...form, category: e.target.value as any })
+                      setForm({ ...form, category: e.target.value as Room["category"] })
                     }
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl p-2.5 text-stone-800 focus:outline-none focus:border-[#144e47]"
                   >

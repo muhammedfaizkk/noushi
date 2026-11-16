@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Room } from "@/data/rooms";
-import { X, Check, MessageCircle, MapPin, Sparkles, Calendar } from "lucide-react";
+import { X, Check, MessageCircle, MapPin, Sparkles, Calendar, Users } from "lucide-react";
 
 interface RoomModalProps {
   room: Room | null;
@@ -122,28 +122,50 @@ export function RoomModal({ room, onClose }: RoomModalProps) {
 
           {/* Quick Stay Calculator */}
           <div className="pt-2 border-t border-stone-100">
-            <div className="flex items-center justify-between gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-stone-400" />
-                <span className="text-xs text-stone-600 font-medium">
-                  Number of nights:
-                </span>
-                <div className="flex items-center border border-stone-200 rounded-lg overflow-hidden ml-1">
-                  <button
-                    onClick={() => setNights(Math.max(1, nights - 1))}
-                    className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100"
-                  >
-                    -
-                  </button>
-                  <span className="px-3 py-1 text-xs font-semibold text-stone-800">
-                    {nights}
-                  </span>
-                  <button
-                    onClick={() => setNights(nights + 1)}
-                    className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100"
-                  >
-                    +
-                  </button>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Calendar size={16} className="text-stone-400" />
+                  <span className="text-xs text-stone-600 font-medium">Nights:</span>
+                  <div className="flex items-center border border-stone-200 rounded-lg overflow-hidden ml-1">
+                    <button
+                      onClick={() => setNights(Math.max(1, nights - 1))}
+                      className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="px-3 py-1 text-xs font-semibold text-stone-800">
+                      {nights}
+                    </span>
+                    <button
+                      onClick={() => setNights(nights + 1)}
+                      className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Users size={16} className="text-stone-400" />
+                  <span className="text-xs text-stone-600 font-medium">Guests:</span>
+                  <div className="flex items-center border border-stone-200 rounded-lg overflow-hidden ml-1">
+                    <button
+                      onClick={() => setGuestCount(Math.max(1, guestCount - 1))}
+                      className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="px-3 py-1 text-xs font-semibold text-stone-800">
+                      {guestCount}
+                    </span>
+                    <button
+                      onClick={() => setGuestCount(Math.min(room.maxGuests || 4, guestCount + 1))}
+                      className="px-2.5 py-1 text-xs text-stone-600 hover:bg-stone-100 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
 

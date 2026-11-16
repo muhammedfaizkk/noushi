@@ -293,7 +293,7 @@ export async function createRoom(data: Partial<Room>): Promise<Room> {
     title: data.title || "New Room",
     location: data.location || "Goa, India",
     state: data.state || "Goa",
-    category: (data.category as any) || "Beach",
+    category: data.category || "Beach",
     price: Number(data.price) || 3500,
     formattedPrice: `₹${Number(data.price || 3500).toLocaleString("en-IN")}`,
     image:
