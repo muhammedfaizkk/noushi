@@ -24,20 +24,23 @@ export function Hero({ onSearch }: HeroProps) {
     }
   };
 
+  const mountainPoster =
+    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=85";
+
   return (
     <section className="relative min-h-[620px] md:min-h-[720px] flex flex-col justify-between pt-28 pb-16 overflow-hidden">
       {/* Background Video & Fallback Poster Container */}
       <div className="absolute inset-0 z-0 overflow-hidden" style={{ position: "absolute" }}>
-        {/* Fallback Image behind video */}
+        {/* High-Res Mountain Fallback Image */}
         <Image
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85"
-          alt="Coastal cliffs and serene ocean"
+          src={mountainPoster}
+          alt="Majestic mountain peaks and serene alpine valley"
           fill
           priority
           className="object-cover object-center scale-105"
         />
 
-        {/* High-Quality Ambient Background Video */}
+        {/* High-Quality Compressed & Upscaled Mountain Background Video */}
         <video
           ref={videoRef}
           autoPlay
@@ -45,17 +48,17 @@ export function Hero({ onSearch }: HeroProps) {
           muted
           playsInline
           preload="auto"
-          poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85"
+          poster={mountainPoster}
           className="absolute inset-0 w-full h-full object-cover object-center scale-105"
         >
           <source src="/videos/hero-background.mp4" type="video/mp4" />
           <source
-            src="https://res.cloudinary.com/demo/video/upload/f_auto:video,q_auto/glide-over-coastal-beach.mp4"
+            src="https://res.cloudinary.com/demo/video/upload/q_auto:good,w_1920,c_scale/docs/mountain-aerial-view.mp4"
             type="video/mp4"
           />
         </video>
 
-        {/* Atmospheric Gradients matching the design's rich slow-travel tones */}
+        {/* Cinematic Atmospheric Gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-black/80" />
         <div className="absolute inset-0 bg-[#0d2a25]/25 mix-blend-multiply" />
       </div>
