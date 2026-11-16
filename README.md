@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Boorooms (Driftwood Stays) — Full-Stack Monorepo
 
-## Getting Started
+Boutique homestay booking platform across India with customer storefront, admin console, and Express REST API backend.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Architecture Overview
+
+```
+boorooms/
+├── backend/                  # Express REST API (Port 5000)
+│   ├── server.js             # Server entry point
+│   ├── api/                  # Storefront API routes (/api/rooms, /api/bookings, /api/stats)
+│   ├── admin/                # Admin API routes (/api/admin/rooms, /bookings, /stats)
+│   └── data/                 # Shared data store
+│
+├── frontend/
+│   ├── client/               # Next.js Customer Storefront (Port 3000)
+│   └── admin/                # Next.js Admin Management Console (Port 3001)
+│
+└── package.json              # Monorepo runner
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quick Start
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Run Everything (Storefront + Admin + API)
+```bash
+npm run dev
+```
+*(or `npm run dev:all`)*
 
-## Learn More
+| Application | URL | Port |
+| :--- | :--- | :--- |
+| **Storefront** | [http://localhost:3000](http://localhost:3000) | `3000` |
+| **Admin Console** | [http://localhost:3001](http://localhost:3001) | `3001` |
+| **Express Backend** | [http://localhost:5000/api/health](http://localhost:5000/api/health) | `5000` |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Run Individually
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Storefront:** `npm run dev:client`
+- **Admin Console:** `npm run dev:admin`
+- **Backend API:** `npm run dev:backend`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Build for Production
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
+*(Builds both `frontend/client` and `frontend/admin`)*

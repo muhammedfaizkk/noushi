@@ -231,4 +231,12 @@ const initialBookings = [
   },
 ];
 
-module.exports = { initialRooms, initialBookings };
+const roomsStore = [...initialRooms];
+const bookingsStore = [...initialBookings];
+
+module.exports = {
+  roomsStore,
+  bookingsStore,
+  initialRooms,
+  initialBookings,
+};

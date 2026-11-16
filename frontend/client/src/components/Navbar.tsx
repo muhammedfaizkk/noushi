@@ -65,10 +65,12 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
             Contact
           </a>
           <a
-            href="/admin"
-            className="text-stone-300 hover:text-white transition-colors tracking-wide bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-md text-xs"
+            href="http://localhost:3001"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-stone-300 hover:text-white transition-colors tracking-wide bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-md text-xs flex items-center gap-1"
           >
-            Admin
+            Admin ↗
           </a>
         </nav>
 

@@ -58,10 +58,12 @@ export function Footer({ onOpenBooking }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="/admin"
+                  href="http://localhost:3001"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-emerald-400 text-stone-300 font-medium transition-colors"
                 >
-                  Admin Portal &rarr;
+                  Admin Portal (:3001) ↗
                 </a>
               </li>
               <li>
