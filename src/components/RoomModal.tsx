@@ -37,7 +37,10 @@ export function RoomModal({ room, onClose }: RoomModalProps) {
         </button>
 
         {/* Hero Image */}
-        <div className="relative h-64 sm:h-72 w-full bg-stone-100">
+        <div
+          className="relative h-64 sm:h-72 w-full bg-stone-100"
+          style={{ position: "relative" }}
+        >
           <Image
             src={room.image}
             alt={room.title}

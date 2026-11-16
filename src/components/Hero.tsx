@@ -10,7 +10,7 @@ export function Hero({ onSearch }: HeroProps) {
   return (
     <section className="relative min-h-[620px] md:min-h-[700px] flex flex-col justify-between pt-28 pb-16 overflow-hidden">
       {/* Background Image with Dark Atmospheric Gradient */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0" style={{ position: "absolute" }}>
         <Image
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=85"
           alt="Coastal cliffs and serene ocean"

@@ -16,7 +16,10 @@ export function RoomCard({ room, onSelectRoom }: RoomCardProps) {
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-stone-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col">
       {/* Image Container with Badges */}
-      <div className="relative h-56 sm:h-60 w-full overflow-hidden bg-stone-100">
+      <div
+        className="relative h-56 sm:h-60 w-full overflow-hidden bg-stone-100"
+        style={{ position: "relative" }}
+      >
         <Image
           src={room.image}
           alt={room.title}

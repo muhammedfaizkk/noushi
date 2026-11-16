@@ -8,7 +8,10 @@ export function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Image with Floating WhatsApp Badge */}
           <div className="lg:col-span-6 relative">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-stone-200">
+            <div
+              className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-[0_16px_40px_rgba(0,0,0,0.08)] bg-stone-200"
+              style={{ position: "relative" }}
+            >
               <Image
                 src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=85"
                 alt="Plantation cottage in dense tropical greenery"
