@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { X, MessageCircle, Send, CheckCircle2 } from "lucide-react";
+import { createBooking } from "@/lib/api";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -21,8 +22,24 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      await createBooking({
+        roomTitle: formData.destination,
+        guestName: formData.name,
+        guestPhone: formData.phone,
+        checkIn:
+          formData.dates.split("-")[0]?.trim() ||
+          new Date().toISOString().slice(0, 10),
+        checkOut: formData.dates.split("-")[1]?.trim() || "",
+        guests: formData.guests,
+        notes:
+          formData.notes || `Storefront direct inquiry for ${formData.destination}`,
+      });
+    } catch {
+      // ignore
+    }
     setSubmitted(true);
   };
 

@@ -58,6 +58,14 @@ export function Footer({ onOpenBooking }: FooterProps) {
               </li>
               <li>
                 <a
+                  href="/admin"
+                  className="hover:text-emerald-400 text-stone-300 font-medium transition-colors"
+                >
+                  Admin Portal &rarr;
+                </a>
+              </li>
+              <li>
+                <a
                   href="#rooms"
                   className="hover:text-white transition-colors"
                 >

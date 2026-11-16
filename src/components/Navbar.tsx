@@ -64,6 +64,12 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
           >
             Contact
           </a>
+          <a
+            href="/admin"
+            className="text-stone-300 hover:text-white transition-colors tracking-wide bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-md text-xs"
+          >
+            Admin
+          </a>
         </nav>
 
         {/* Right CTA */}
