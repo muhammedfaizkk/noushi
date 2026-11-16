@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const { roomsStore } = require("../data/initialData");
+const { roomsStore } = require("../../data/initialData");
 
-// Get all rooms (with filters & search)
-router.get("/", (req, res) => {
-  const { category, search, sortBy } = req.query;
+/**
+ * Filter and sort rooms based on query parameters
+ * @param {Object} query - { category, search, sortBy }
+ * @returns {Array} List of filtered and sorted rooms
+ */
+const getAllRooms = ({ category, search, sortBy } = {}) => {
   let results = [...roomsStore];
 
   if (category && category !== "All") {
@@ -30,19 +31,22 @@ router.get("/", (req, res) => {
   } else if (sortBy === "price-desc") {
     results.sort((a, b) => b.price - a.price);
   } else {
-    results.sort((a, b) => parseInt(a.number || "0") - parseInt(b.number || "0"));
+    results.sort((a, b) => parseInt(a.number || "0", 10) - parseInt(b.number || "0", 10));
   }
 
-  res.json({ success: true, count: results.length, data: results });
-});
+  return results;
+};
 
-// Get single room by ID
-router.get("/:id", (req, res) => {
-  const room = roomsStore.find((r) => r.id === req.params.id);
-  if (!room) {
-    return res.status(404).json({ success: false, message: "Room not found" });
-  }
-  res.json({ success: true, data: room });
-});
+/**
+ * Find room by ID
+ * @param {string} id
+ * @returns {Object|null}
+ */
+const getRoomById = (id) => {
+  return roomsStore.find((r) => r.id === id) || null;
+};
 
-module.exports = router;
+module.exports = {
+  getAllRooms,
+  getRoomById,
+};

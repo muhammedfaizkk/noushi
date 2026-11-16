@@ -9,8 +9,13 @@ Boutique homestay booking platform across India with customer storefront, admin 
 ```
 boorooms/
 ├── backend/                  # Express REST API (Port 5000)
-│   ├── server.js             # Server entry point
-│   ├── api/                  # Storefront API routes (/api/rooms, /api/bookings, /api/stats)
+│   ├── server.js             # Server entry point & health check
+│   ├── api/                  # Storefront API (Layered Express Architecture)
+│   │   ├── controllers/      # Request handlers & response formatting
+│   │   ├── middleware/       # Request validation
+│   │   ├── routes/           # Express route definitions
+│   │   ├── services/         # Business logic & data operations
+│   │   └── index.js          # API router entry point
 │   ├── admin/                # Admin API routes (/api/admin/rooms, /bookings, /stats)
 │   └── data/                 # Shared data store
 │

@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const { roomsStore, bookingsStore } = require("../data/initialData");
+const { roomsStore, bookingsStore } = require("../../data/initialData");
 
-// Create new customer booking inquiry
-router.post("/", (req, res) => {
+/**
+ * Create a new guest booking inquiry
+ * @param {Object} bookingData
+ * @returns {Object} Newly created booking
+ */
+const createBooking = (bookingData) => {
   const {
     roomId,
     roomTitle,
@@ -15,14 +17,7 @@ router.post("/", (req, res) => {
     nights,
     guests,
     notes,
-  } = req.body;
-
-  if (!guestName || !guestPhone) {
-    return res.status(400).json({
-      success: false,
-      message: "Guest name and phone number are required.",
-    });
-  }
+  } = bookingData;
 
   const matchedRoom = roomsStore.find((r) => r.id === roomId || r.title === roomTitle);
   const stayNights = Number(nights) || 2;
@@ -47,12 +42,18 @@ router.post("/", (req, res) => {
   };
 
   bookingsStore.unshift(newBooking);
-  res.status(201).json({ success: true, data: newBooking });
-});
+  return newBooking;
+};
 
-// List bookings
-router.get("/", (req, res) => {
-  res.json({ success: true, count: bookingsStore.length, data: bookingsStore });
-});
+/**
+ * Retrieve all bookings
+ * @returns {Array} List of all bookings
+ */
+const getAllBookings = () => {
+  return bookingsStore;
+};
 
-module.exports = router;
+module.exports = {
+  createBooking,
+  getAllBookings,
+};

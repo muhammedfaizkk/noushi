@@ -1,8 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const { roomsStore, bookingsStore } = require("../data/initialData");
+const { roomsStore, bookingsStore } = require("../../data/initialData");
 
-router.get("/", (req, res) => {
+/**
+ * Calculate storefront aggregate performance statistics
+ * @returns {Object} Stats summary
+ */
+const getStats = () => {
   const totalRevenue = bookingsStore.reduce(
     (sum, b) => (b.status === "confirmed" ? sum + (b.totalAmount || 0) : sum),
     0
@@ -19,7 +21,7 @@ router.get("/", (req, res) => {
     regionalBreakdown[r.state] = (regionalBreakdown[r.state] || 0) + 1;
   });
 
-  res.json({
+  return {
     totalRooms: roomsStore.length,
     totalBookings: bookingsStore.length,
     pendingInquiries,
@@ -29,7 +31,9 @@ router.get("/", (req, res) => {
     averagePrice,
     formattedAveragePrice: `₹${averagePrice.toLocaleString("en-IN")}`,
     regionalBreakdown,
-  });
-});
+  };
+};
 
-module.exports = router;
+module.exports = {
+  getStats,
+};
