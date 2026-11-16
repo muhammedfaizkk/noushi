@@ -4,17 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev:all",
-    "dev:all": "concurrently -n \"client,admin,backend\" -c \"cyan,magenta,green\" \"npm --prefix frontend/client run dev\" \"npm --prefix frontend/admin run dev\" \"node backend/server.js\"",
+    "dev:all": "concurrently -n \"client,admin,backend\" -c \"cyan,magenta,green\" \"npm --prefix frontend/client run dev\" \"npm --prefix admin run dev\" \"node backend/server.js\"",
     "dev:client": "npm --prefix frontend/client run dev",
-    "dev:admin": "npm --prefix frontend/admin run dev",
+    "dev:admin": "npm --prefix admin run dev",
     "dev:backend": "node backend/server.js",
     "build": "npm run build:all",
     "build:client": "npm --prefix frontend/client run build",
-    "build:admin": "npm --prefix frontend/admin run build",
+    "build:admin": "npm --prefix admin run build",
     "build:all": "npm run build:client && npm run build:admin",
     "start": "npm run dev:all",
     "start:client": "npm --prefix frontend/client start",
-    "start:admin": "npm --prefix frontend/admin start",
+    "start:admin": "npm --prefix admin start",
     "start:backend": "node backend/server.js"
   },
   "dependencies": {

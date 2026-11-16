@@ -2,9 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// Handlers from the two backend subfolders: api and admin
+// Storefront API Router
 const apiRouter = require("./api");
-const adminRouter = require("./admin");
 const { roomsStore, bookingsStore } = require("./data/initialData");
 
 dotenv.config();
@@ -36,12 +35,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // ==========================================
-// 2. ADMIN FOLDER ROUTES (/api/admin/...)
-// ==========================================
-app.use("/api/admin", adminRouter);
-
-// ==========================================
-// 3. PUBLIC API FOLDER ROUTES (/api/...)
+// 2. STOREFRONT API ROUTES (/api/...)
 // ==========================================
 app.use("/api", apiRouter);
 
@@ -49,12 +43,11 @@ app.use("/api", apiRouter);
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
     console.log(`\n======================================================`);
-    console.log(`  [Backend Server] Driftwood Stays`);
+    console.log(`  [Backend Server] Driftwood Stays (Storefront API)`);
     console.log(`  Running on http://localhost:${PORT}`);
     console.log(`======================================================`);
     console.log(`  Health Check:  GET  http://localhost:${PORT}/api/health`);
     console.log(`  Storefront API:GET  http://localhost:${PORT}/api/rooms`);
-    console.log(`  Admin API:     GET  http://localhost:${PORT}/api/admin/stats`);
     console.log(`======================================================\n`);
   });
 }

@@ -113,7 +113,7 @@ export function AdminSidebar({
               }`}
             />
             <span className="text-[11px] font-medium text-stone-300">
-              {isBackendConnected ? "Express API :5000" : "In-Memory Mode"}
+              {isBackendConnected ? "Next.js API :3001" : "Local Mode"}
             </span>
           </div>
           {onRefresh && (

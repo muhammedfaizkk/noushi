@@ -8,20 +8,25 @@ Boutique homestay booking platform across India with customer storefront, admin 
 
 ```
 boorooms/
-├── backend/                  # Express REST API (Port 5000)
+├── backend/                  # Express REST API (Port 5000) for Storefront
 │   ├── server.js             # Server entry point & health check
-│   ├── api/                  # Storefront API (Layered Express Architecture)
-│   │   ├── controllers/      # Request handlers & response formatting
-│   │   ├── middleware/       # Request validation
-│   │   ├── routes/           # Express route definitions
-│   │   ├── services/         # Business logic & data operations
-│   │   └── index.js          # API router entry point
-│   ├── admin/                # Admin API routes (/api/admin/rooms, /bookings, /stats)
-│   └── data/                 # Shared data store
+│   ├── api/                  # Layered Storefront API (routes, controllers, services, middleware)
+│   └── data/                 # Storefront data store
 │
 ├── frontend/
-│   ├── client/               # Next.js Customer Storefront (Port 3000)
-│   └── admin/                # Next.js Admin Management Console (Port 3001)
+│   └── client/               # Customer Storefront Next.js App (Port 3000)
+│
+├── admin/                    # Standalone Admin Full-Stack Next.js Project (Port 3001)
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── api/          # Built-in Next.js Backend (stats, rooms, bookings Route Handlers)
+│   │   │   ├── rooms/        # Rooms UI
+│   │   │   ├── bookings/     # Bookings & WhatsApp UI
+│   │   │   └── page.tsx      # Executive Dashboard
+│   │   ├── components/       # Admin Sidebar & Header
+│   │   ├── data/             # Admin data store
+│   │   └── lib/              # API client
+│   └── package.json
 │
 └── package.json              # Monorepo runner
 ```

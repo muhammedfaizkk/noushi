@@ -17,6 +17,8 @@ export interface Room {
   };
   amenities: string[];
   maxGuests: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Booking {
@@ -34,6 +36,7 @@ export interface Booking {
   status: "pending" | "confirmed" | "cancelled";
   notes?: string;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface DashboardStats {
@@ -41,6 +44,7 @@ export interface DashboardStats {
   totalBookings: number;
   pendingInquiries: number;
   confirmedBookings: number;
+  cancelledBookings: number;
   totalRevenue: number;
   formattedRevenue: string;
   averagePrice: number;
@@ -48,11 +52,13 @@ export interface DashboardStats {
   regionalBreakdown: Record<string, number>;
 }
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+// Global in-memory cache to persist across Next.js dev reloads
+declare global {
+  var __adminRoomsStore: Room[] | undefined;
+  var __adminBookingsStore: Booking[] | undefined;
+}
 
-// Initial seed fallback
-let fallbackRooms: Room[] = [
+const initialRooms: Room[] = [
   {
     id: "varkala-cliff",
     number: "01",
@@ -70,8 +76,15 @@ let fallbackRooms: Room[] = [
       phone: "+919876543210",
       responseSpeed: "Within 10 minutes",
     },
-    amenities: ["Panoramic Sea View", "Complimentary Breakfast", "High-speed Wi-Fi"],
+    amenities: [
+      "Panoramic Sea View",
+      "Complimentary Kerala Breakfast",
+      "High-speed Wi-Fi (150 Mbps)",
+      "Air Conditioning",
+      "Private Sundeck & Hammock",
+    ],
     maxGuests: 2,
+    createdAt: "2026-11-01T08:00:00.000Z",
   },
   {
     id: "manali-cedar",
@@ -90,8 +103,14 @@ let fallbackRooms: Room[] = [
       phone: "+919876543210",
       responseSpeed: "Within 15 minutes",
     },
-    amenities: ["Himalayan Snow Peak View", "Radiant Heating", "Workstation"],
+    amenities: [
+      "Himalayan Snow Peak View",
+      "Radiant Space Heating",
+      "Handmade Cedar Woodwork",
+      "Dedicated Workstation & Wi-Fi",
+    ],
     maxGuests: 2,
+    createdAt: "2026-11-02T10:30:00.000Z",
   },
   {
     id: "jaipur-haveli",
@@ -104,14 +123,20 @@ let fallbackRooms: Room[] = [
     formattedPrice: "₹5,800",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",
     tags: ["Courtyard", "Wi-Fi", "Air conditioning", "Artisan handcrafted"],
-    description: "Step into 180 years of Rajasthani architectural heritage with stone jali arches.",
+    description: "Step into 180 years of Rajasthani architectural heritage with intricate stone jali arches and open central courtyard.",
     host: {
       name: "Digvijay Singh",
       phone: "+919876543210",
       responseSpeed: "Within 5 minutes",
     },
-    amenities: ["Heritage Courtyard Access", "Traditional Breakfast", "Silent AC"],
+    amenities: [
+      "Private Heritage Courtyard Access",
+      "Traditional Rajasthani Breakfast",
+      "Silent Inverter AC",
+      "Artisanal Block-Print Linens",
+    ],
     maxGuests: 2,
+    createdAt: "2026-11-03T11:15:00.000Z",
   },
   {
     id: "coorg-plantation",
@@ -124,14 +149,20 @@ let fallbackRooms: Room[] = [
     formattedPrice: "₹4,900",
     image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=1000&q=80",
     tags: ["Garden", "Estate nature trails", "Free parking", "Bonfire area"],
-    description: "Nestled inside a 40-acre heritage coffee and black pepper estate.",
+    description: "Nestled inside a 40-acre heritage coffee and black pepper estate. Wake up to freshly roasted beans and rainforest streams.",
     host: {
       name: "Bopanna",
       phone: "+919876543210",
       responseSpeed: "Within 10 minutes",
     },
-    amenities: ["Coffee Estate Verandah", "Nature Walk", "Bonfire Pit"],
+    amenities: [
+      "Private Coffee Estate Verandah",
+      "Guided Morning Birding Walk",
+      "Evening Firepit & Barbecue",
+      "Home-cooked Kodava Meals",
+    ],
     maxGuests: 3,
+    createdAt: "2026-11-04T09:00:00.000Z",
   },
   {
     id: "goa-quarter",
@@ -144,14 +175,20 @@ let fallbackRooms: Room[] = [
     formattedPrice: "₹2,800",
     image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80",
     tags: ["Wi-Fi", "Historic walking", "Kitchenette", "Balcony"],
-    description: "Set in the heart of Latin Quarter Fontainhas with Portuguese colonial architecture.",
+    description: "Set in the heart of Latin Quarter Fontainhas with Portuguese colonial architecture and iron-wrought balcony.",
     host: {
       name: "Maria & Carlos",
       phone: "+919876543210",
       responseSpeed: "Within 10 minutes",
     },
-    amenities: ["Streetview Balcony", "Kitchenette", "High-speed Wi-Fi"],
+    amenities: [
+      "Wrought-Iron Streetview Balcony",
+      "Equipped Kitchenette",
+      "High-speed Wi-Fi",
+      "Air Conditioning",
+    ],
     maxGuests: 2,
+    createdAt: "2026-11-05T14:20:00.000Z",
   },
   {
     id: "gokarna-palms",
@@ -164,18 +201,24 @@ let fallbackRooms: Room[] = [
     formattedPrice: "₹2,400",
     image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=1000&q=80",
     tags: ["Beach access", "Breakfast included", "Hammock", "Ceiling fan"],
-    description: "A rustic bamboo sanctuary steps from Kudle Beach.",
+    description: "A rustic bamboo and thatch sanctuary just steps away from the untouched sands of Kudle Beach.",
     host: {
       name: "Shankar",
       phone: "+919876543210",
       responseSpeed: "Within 15 minutes",
     },
-    amenities: ["Direct Beach Access", "Private Hammock", "Eco Shower"],
+    amenities: [
+      "Direct Step-out Beach Access",
+      "Private Verandah & Cotton Hammock",
+      "Fresh Tropical Fruit Breakfast",
+      "Open-air Eco Shower",
+    ],
     maxGuests: 2,
+    createdAt: "2026-11-06T16:45:00.000Z",
   },
 ];
 
-let fallbackBookings: Booking[] = [
+const initialBookings: Booking[] = [
   {
     id: "bk-101",
     roomId: "varkala-cliff",
@@ -242,244 +285,190 @@ let fallbackBookings: Booking[] = [
   },
 ];
 
-// Connection checker
-export async function checkBackendConnection(): Promise<boolean> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/health`, {
-      method: "GET",
-      signal: AbortSignal.timeout(1500),
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
+if (!globalThis.__adminRoomsStore) {
+  globalThis.__adminRoomsStore = [...initialRooms];
+}
+if (!globalThis.__adminBookingsStore) {
+  globalThis.__adminBookingsStore = [...initialBookings];
 }
 
-// Rooms API
-export async function getRooms(): Promise<Room[]> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/rooms`, {
-      signal: AbortSignal.timeout(2000),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
-  return [...fallbackRooms];
+export const roomsStore = globalThis.__adminRoomsStore;
+export const bookingsStore = globalThis.__adminBookingsStore;
+
+// Store Operations
+export function getRooms(): Room[] {
+  return [...roomsStore];
 }
 
-export async function createRoom(data: Partial<Room>): Promise<Room> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/rooms`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
+export function getRoomById(id: string): Room | undefined {
+  return roomsStore.find((r) => r.id === id);
+}
 
-  const num = String(fallbackRooms.length + 1).padStart(2, "0");
+export function createRoom(data: Partial<Room>): Room {
+  const nextNumber = String(roomsStore.length + 1).padStart(2, "0");
+  const newId =
+    (data.title || "room")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-") +
+    "-" +
+    Date.now().toString().slice(-4);
+  const numPrice = Number(data.price) || 3500;
+
   const newRoom: Room = {
-    id: `room-${Date.now()}`,
-    number: num,
+    id: newId,
+    number: nextNumber,
     title: data.title || "New Room",
     location: data.location || "Goa, India",
-    state: data.state || "Goa",
+    state: data.state || (data.location ? data.location.split(",")[1]?.trim() : "India") || "India",
     category: data.category || "Beach",
-    price: Number(data.price) || 3500,
-    formattedPrice: `₹${Number(data.price || 3500).toLocaleString("en-IN")}`,
+    price: numPrice,
+    formattedPrice: `₹${numPrice.toLocaleString("en-IN")}`,
     image:
       data.image ||
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80",
-    tags: data.tags || ["Wi-Fi", "Verified"],
-    description: data.description || "Boutique retreat.",
+    tags: Array.isArray(data.tags)
+      ? data.tags
+      : ["Wi-Fi", "Verified"],
+    description: data.description || "A serene handpicked room with authentic local charm.",
     host: data.host || {
-      name: "Host",
+      name: "Local Host",
       phone: "+919876543210",
       responseSpeed: "Within 10 minutes",
     },
-    amenities: data.amenities || ["Wi-Fi", "Breakfast"],
+    amenities: Array.isArray(data.amenities)
+      ? data.amenities
+      : [
+          "High-speed Wi-Fi",
+          "Complimentary Breakfast",
+          "Dedicated Host",
+          "En-suite Bathroom",
+        ],
     maxGuests: Number(data.maxGuests) || 2,
+    createdAt: new Date().toISOString(),
   };
-  fallbackRooms.push(newRoom);
+
+  roomsStore.push(newRoom);
   return newRoom;
 }
 
-export async function updateRoom(id: string, data: Partial<Room>): Promise<Room> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/rooms/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
+export function updateRoom(id: string, data: Partial<Room>): Room | null {
+  const index = roomsStore.findIndex((r) => r.id === id);
+  if (index === -1) return null;
 
-  const idx = fallbackRooms.findIndex((r) => r.id === id);
-  if (idx !== -1) {
-    fallbackRooms[idx] = { ...fallbackRooms[idx], ...data };
-    return fallbackRooms[idx];
-  }
-  throw new Error("Room not found");
+  const current = roomsStore[index];
+  const numPrice = data.price !== undefined ? Number(data.price) : current.price;
+
+  roomsStore[index] = {
+    ...current,
+    ...data,
+    price: numPrice,
+    formattedPrice: `₹${numPrice.toLocaleString("en-IN")}`,
+    updatedAt: new Date().toISOString(),
+  };
+
+  return roomsStore[index];
 }
 
-export async function deleteRoom(id: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/rooms/${id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) return true;
-  } catch {
-    // fallback
-  }
-
-  fallbackRooms = fallbackRooms.filter((r) => r.id !== id);
-  return true;
+export function deleteRoom(id: string): Room | null {
+  const index = roomsStore.findIndex((r) => r.id === id);
+  if (index === -1) return null;
+  return roomsStore.splice(index, 1)[0];
 }
 
-// Bookings API
-export async function getBookings(): Promise<Booking[]> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/bookings`, {
-      signal: AbortSignal.timeout(2000),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
+export function getBookings(filter?: { status?: string; search?: string }): Booking[] {
+  let results = [...bookingsStore];
+
+  if (filter?.status && filter.status !== "all") {
+    results = results.filter((b) => b.status === filter.status);
   }
-  return [...fallbackBookings];
+
+  if (filter?.search) {
+    const q = filter.search.toLowerCase();
+    results = results.filter(
+      (b) =>
+        b.guestName.toLowerCase().includes(q) ||
+        b.guestPhone.includes(q) ||
+        b.roomTitle.toLowerCase().includes(q)
+    );
+  }
+
+  results.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return results;
 }
 
-export async function createBooking(data: Partial<Booking>): Promise<Booking> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/bookings`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
+export function createBooking(data: Partial<Booking>): Booking {
+  const matchedRoom = roomsStore.find((r) => r.id === data.roomId || r.title === data.roomTitle);
+  const stayNights = Number(data.nights) || 2;
+  const price = matchedRoom ? matchedRoom.price : 3500;
+  const total = Number(data.totalAmount) || price * stayNights;
 
   const newBooking: Booking = {
     id: `bk-${Date.now().toString().slice(-4)}`,
-    roomId: data.roomId || "custom",
-    roomTitle: data.roomTitle || "Boutique Stay",
+    roomId: matchedRoom ? matchedRoom.id : (data.roomId || "custom"),
+    roomTitle: matchedRoom ? matchedRoom.title : (data.roomTitle || "Boutique Stay"),
     guestName: data.guestName || "Guest",
-    guestEmail: data.guestEmail || "guest@example.com",
+    guestEmail: data.guestEmail || `${(data.guestName || "guest").toLowerCase().replace(/\s+/g, ".")}@example.com`,
     guestPhone: data.guestPhone || "+91 98765 43210",
     checkIn: data.checkIn || new Date().toISOString().slice(0, 10),
     checkOut: data.checkOut || new Date(Date.now() + 86400000 * 2).toISOString().slice(0, 10),
-    nights: Number(data.nights) || 2,
+    nights: stayNights,
     guests: data.guests || "2 guests",
-    totalAmount: Number(data.totalAmount) || 7000,
-    status: "pending",
-    notes: data.notes || "Direct inquiry",
+    totalAmount: total,
+    status: data.status || "pending",
+    notes: data.notes || "Recorded via Admin Console",
     createdAt: new Date().toISOString(),
   };
-  fallbackBookings.unshift(newBooking);
+
+  bookingsStore.unshift(newBooking);
   return newBooking;
 }
 
-export async function updateBookingStatus(
+export function updateBookingStatus(
   id: string,
   status: "pending" | "confirmed" | "cancelled"
-): Promise<Booking> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/bookings/${id}/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
-
-  const b = fallbackBookings.find((x) => x.id === id);
-  if (b) {
-    b.status = status;
-    return b;
-  }
-  throw new Error("Booking not found");
+): Booking | null {
+  const booking = bookingsStore.find((b) => b.id === id);
+  if (!booking) return null;
+  booking.status = status;
+  booking.updatedAt = new Date().toISOString();
+  return booking;
 }
 
-export async function deleteBooking(id: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/bookings/${id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) return true;
-  } catch {
-    // fallback
-  }
-
-  fallbackBookings = fallbackBookings.filter((b) => b.id !== id);
-  return true;
+export function deleteBooking(id: string): Booking | null {
+  const index = bookingsStore.findIndex((b) => b.id === id);
+  if (index === -1) return null;
+  return bookingsStore.splice(index, 1)[0];
 }
 
-// Stats API
-export async function getDashboardStats(): Promise<DashboardStats> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/admin/stats`, {
-      signal: AbortSignal.timeout(2000),
-    });
-    if (res.ok) {
-      const json = await res.json();
-      return json.data;
-    }
-  } catch {
-    // fallback
-  }
-
-  const rev = fallbackBookings.reduce(
+export function getDashboardStats(): DashboardStats {
+  const totalRevenue = bookingsStore.reduce(
     (sum, b) => (b.status === "confirmed" ? sum + (b.totalAmount || 0) : sum),
     0
   );
-  const avg =
-    fallbackRooms.length > 0
-      ? Math.round(
-          fallbackRooms.reduce((sum, r) => sum + r.price, 0) /
-            fallbackRooms.length
-        )
+  const pendingInquiries = bookingsStore.filter((b) => b.status === "pending").length;
+  const confirmedBookings = bookingsStore.filter((b) => b.status === "confirmed").length;
+  const cancelledBookings = bookingsStore.filter((b) => b.status === "cancelled").length;
+
+  const averagePrice =
+    roomsStore.length > 0
+      ? Math.round(roomsStore.reduce((sum, r) => sum + r.price, 0) / roomsStore.length)
       : 0;
-  const reg: Record<string, number> = {};
-  fallbackRooms.forEach((r) => {
-    reg[r.state] = (reg[r.state] || 0) + 1;
+
+  const regionalBreakdown: Record<string, number> = {};
+  roomsStore.forEach((r) => {
+    regionalBreakdown[r.state] = (regionalBreakdown[r.state] || 0) + 1;
   });
 
   return {
-    totalRooms: fallbackRooms.length,
-    totalBookings: fallbackBookings.length,
-    pendingInquiries: fallbackBookings.filter((b) => b.status === "pending").length,
-    confirmedBookings: fallbackBookings.filter((b) => b.status === "confirmed").length,
-    totalRevenue: rev,
-    formattedRevenue: `₹${rev.toLocaleString("en-IN")}`,
-    averagePrice: avg,
-    formattedAveragePrice: `₹${avg.toLocaleString("en-IN")}`,
-    regionalBreakdown: reg,
+    totalRooms: roomsStore.length,
+    totalBookings: bookingsStore.length,
+    pendingInquiries,
+    confirmedBookings,
+    cancelledBookings,
+    totalRevenue,
+    formattedRevenue: `₹${totalRevenue.toLocaleString("en-IN")}`,
+    averagePrice,
+    formattedAveragePrice: `₹${averagePrice.toLocaleString("en-IN")}`,
+    regionalBreakdown,
   };
 }
