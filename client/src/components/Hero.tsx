@@ -33,16 +33,16 @@ export function Hero({ onSearch }: HeroProps) {
 
   return (
     <section aria-labelledby="ha-title" className="bg-[#FAF7F2] text-[#1F2A2E] overflow-x-clip">
-      <div className="ha-wrap max-w-[1240px] mx-auto px-6 pt-28 pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:px-5 max-[900px]:pt-[72px] max-[900px]:pb-8 max-[900px]:gap-6">
+      <div className="ha-wrap max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:pt-24 max-[900px]:pb-10 max-[900px]:gap-5">
         <div className="ha-copy flex-1 min-w-0 max-w-[560px] flex flex-col gap-5 max-[900px]:max-w-none max-[900px]:gap-3.5">
-          <p className="ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">
+          <p className="ha-lead ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">
             <span className="ha-live w-2 h-2 rounded-full bg-[#1E7A4C]" />
             Hosts reply on WhatsApp
           </p>
 
           <h1
             id="ha-title"
-            className="ha-in ha-d2 m-0 font-medium text-[42px] sm:text-[clamp(38px,5.4vw,66px)] leading-[1.05] tracking-[-0.02em]"
+            className="ha-in ha-d2 m-0 font-medium text-[2.625rem] leading-[1.05] tracking-[-0.02em] min-[901px]:text-[clamp(2.75rem,4.8vw,4.125rem)]"
             style={{ fontFamily: "var(--font-fraunces), Georgia, serif" }}
           >
             Wake up
@@ -65,14 +65,15 @@ export function Hero({ onSearch }: HeroProps) {
             </span>
           </h1>
 
-          <p className="ha-in ha-d3 m-0 text-[15px] sm:text-lg text-[#4E585C] max-w-[470px]">
-            Handpicked rooms by the sea, in the hills and in old city quarters across India. Book direct, no platform fees.
+          <p className="ha-sub ha-in ha-d3 m-0 text-[15px] sm:text-lg text-[#4E585C] max-w-[470px]">
+            <span className="min-[901px]:hidden">Handpicked stays across India. Book direct, no fees.</span>
+            <span className="hidden min-[901px]:inline">Handpicked rooms by the sea, in the hills and in old city quarters across India. Book direct, no platform fees.</span>
           </p>
 
           <form
             role="search"
             onSubmit={search}
-            className="ha-in ha-d4 flex items-center gap-1.5 py-1.5 pr-1.5 pl-[18px] rounded-2xl bg-[#FFFDF9] border border-[#D6CCBD] shadow-[0_12px_30px_rgba(31,42,46,0.08)]"
+            className="ha-search ha-in ha-d4 flex w-full items-center gap-1.5 py-1.5 pr-1.5 pl-[18px] rounded-2xl bg-[#FFFDF9] border border-[#D6CCBD] shadow-[0_12px_30px_rgba(31,42,46,0.08)]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
               <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" />
@@ -85,7 +86,7 @@ export function Hero({ onSearch }: HeroProps) {
               autoComplete="off"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Where to? Kerala, Manali, Jaipur…"
+              placeholder="Search Kerala, Manali..."
               className="flex-1 min-w-0 min-h-12 border-0 bg-transparent text-[#1F2A2E] text-base outline-none placeholder:text-[#8A9296]"
             />
             <Button type="submit" size="lg" className="ha-cta ha-searchbtn shrink-0">
@@ -97,7 +98,7 @@ export function Hero({ onSearch }: HeroProps) {
             </Button>
           </form>
 
-          <div className="ha-in ha-d5 ha-chips flex flex-wrap gap-2" role="group" aria-label="Popular destinations">
+          <div className="ha-in ha-d5 ha-chips flex w-full flex-wrap gap-2" role="group" aria-label="Popular destinations">
             {PLACES.map((place) => {
               const selected = query.trim().toLowerCase() === place.toLowerCase();
               return (

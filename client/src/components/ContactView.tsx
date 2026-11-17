@@ -42,7 +42,7 @@ export function ContactView() {
     <div className="min-h-screen bg-cream text-ink flex flex-col">
       <Navbar variant="light" />
 
-      <main className="flex-1 max-w-[1240px] mx-auto w-full px-4 md:px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+      <main className="flex-1 max-w-[1240px] mx-auto w-full px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pt-36 md:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] gap-10 lg:gap-16 items-start">
           <div className="min-w-0">
             <p className="m-0 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">

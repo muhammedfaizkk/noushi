@@ -98,7 +98,7 @@ function MobileGroup({
 export function Footer() {
   return (
     <footer id="contact" className="bg-[#111a18] text-stone-300">
-      <div className="mx-auto max-w-7xl px-5 pb-8 pt-10 sm:px-6 lg:hidden">
+      <div className="mx-auto max-w-[1240px] px-5 pb-8 pt-10 sm:px-6 lg:hidden">
         <Logo variant="light" />
         <p className="mt-3 text-sm text-stone-400">Your address line 1, City, State, PIN</p>
         <a
@@ -129,7 +129,7 @@ export function Footer() {
         <p className="mt-4 text-xs text-stone-500">© 2026 Driftwood Stays. Photos: Unsplash.</p>
       </div>
 
-      <div className="mx-auto hidden max-w-7xl px-8 py-8 lg:block">
+      <div className="mx-auto hidden max-w-[1240px] px-8 py-8 lg:block">
         <div className="flex items-start justify-between gap-10">
           <div className="max-w-[200px] shrink-0">
             <Logo variant="light" />

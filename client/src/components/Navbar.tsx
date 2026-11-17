@@ -41,7 +41,7 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
       }`}
     >
       <div className={`mx-auto grid grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-3 ${
-        light ? "max-w-[1240px] px-5 md:px-6" : "max-w-7xl px-5 sm:px-6 lg:px-8"
+        light ? "max-w-[1240px] px-5 sm:px-6 lg:px-8" : "max-w-[1240px] px-5 sm:px-6 lg:px-8"
       }`}>
         {/* Logo */}
         <a href="/" className="flex items-center justify-self-start min-w-0">
@@ -84,19 +84,24 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex md:hidden items-center justify-self-end gap-3">
-          <Button href="/#rooms" size="sm">
-            Book now
-          </Button>
+        <div className="flex md:hidden items-center justify-self-end gap-2">
           {!light && (
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white p-2 rounded-md hover:bg-white/10"
-              aria-label="Toggle Menu"
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            <Button href="/#rooms" size="sm">
+              Book now
+            </Button>
           )}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className={
+              light
+                ? "flex h-11 w-11 items-center justify-center rounded-xl border border-[#D6CCBD] bg-white text-ink"
+                : "text-white p-2 rounded-md hover:bg-white/10"
+            }
+            aria-label="Toggle Menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
 
@@ -131,9 +136,16 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
           <a
             href="/contact"
             onClick={() => setMobileMenuOpen(false)}
-            className={`py-3.5 text-sm font-medium ${light ? "" : "hover:text-white"}`}
+            className={`py-3.5 text-sm font-medium border-b ${light ? "border-[#e7dfd2]" : "border-stone-800 hover:text-white"}`}
           >
             Contact
+          </a>
+          <a
+            href="/#rooms"
+            onClick={() => setMobileMenuOpen(false)}
+            className="mt-3 inline-flex items-center justify-center rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white"
+          >
+            Book now
           </a>
         </div>
       )}

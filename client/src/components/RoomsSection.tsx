@@ -55,14 +55,14 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
 
   return (
     <section id="rooms" className="pt-10 pb-16 md:py-20 bg-[#faf7f2] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-stone-200/60">
           <div>
             <span className="text-xs uppercase tracking-widest text-accent font-semibold block mb-2">
               OUR ROOMS &mdash;
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-normal tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-medium tracking-tight">
               The most memorable rest starts here.
             </h2>
             <p className="text-xs sm:text-sm text-stone-500 mt-1.5 font-normal">

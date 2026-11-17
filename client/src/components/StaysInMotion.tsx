@@ -112,7 +112,7 @@ export function StaysInMotion() {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
             <p className="m-0 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">

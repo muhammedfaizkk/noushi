@@ -2,7 +2,7 @@
 
 @theme inline {
   --font-sans: var(--font-red-hat-display), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-red-hat-display), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
   --font-text: var(--font-red-hat-text), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-red-hat-mono), ui-monospace, monospace;
   --color-accent: #1f6f6b;
@@ -32,7 +32,7 @@ body {
   border: 1px solid transparent;
   background: var(--color-accent);
   color: #fff;
-  font-family: inherit;
+  font-family: var(--font-red-hat-text), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
@@ -212,7 +212,7 @@ dd {
 .ha-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(31, 42, 46, 0.2); }
 
 @media (max-width: 900px) {
-  .ha-stage { height: 320px !important; }
+  .ha-stage { height: 340px !important; }
   .ha-cardA {
     animation: ha-rise 0.9s 0.25s both, ha-floatAm 7s 1.15s ease-in-out infinite;
   }
@@ -264,12 +264,21 @@ dd {
   }
   .ha-route, .ha-routeDash, .ha-pin { display: none; }
 }
+@media (max-width: 640px) {
+  .ha-copy { align-items: center; text-align: center; }
+  .ha-lead { align-self: center; }
+  .ha-sub { max-width: 18.5rem; }
+  .ha-word { left: 50%; translate: -50% 0; }
+  .ha-search,
+  .ha-searchbtn,
+  .ha-b1 { border-radius: 999px !important; }
+}
 @media (max-width: 480px) {
-  .ha-stage { height: 292px !important; }
-  .ha-cardA { width: 54% !important; left: 23% !important; right: auto !important; }
-  .ha-cardB { width: 42% !important; left: -60px !important; right: auto !important; }
-  .ha-cardC { width: 42% !important; left: auto !important; right: -60px !important; }
-  .ha-b1 { bottom: -8px !important; }
+  .ha-stage { height: 320px !important; }
+  .ha-cardA { width: 52% !important; left: 24% !important; right: auto !important; }
+  .ha-cardB { width: 40% !important; left: -52px !important; right: auto !important; }
+  .ha-cardC { width: 40% !important; left: auto !important; right: -52px !important; }
+  .ha-b1 { bottom: 6px !important; }
   .ha-b2 { display: none !important; }
   .ha-searchbtn {
     width: 44px;

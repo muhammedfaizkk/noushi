@@ -150,7 +150,7 @@ export function RoomView({ room }: { room: Room }) {
     <div className="min-h-screen bg-[#f6f3ec] text-[#1c2826]">
       <Navbar variant="solid" />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-28 lg:pb-16 pt-20">
+      <main className="max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 pb-28 lg:pb-16 pt-24">
         <div className="mb-4 flex items-center justify-between">
           <Link
             href="/#rooms"
@@ -216,7 +216,7 @@ export function RoomView({ room }: { room: Room }) {
             <p className="text-[11px] tracking-[0.18em] uppercase text-stone-500 font-medium">
               {room.category} · {room.number}
             </p>
-            <h1 className="font-serif text-[1.7rem] leading-tight sm:text-4xl text-[#1c2826] mt-2 font-normal tracking-tight">
+            <h1 className="font-serif text-[1.75rem] leading-tight sm:text-4xl text-[#1c2826] mt-2 font-medium tracking-tight">
               {room.title}
             </h1>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-stone-600">
@@ -400,7 +400,7 @@ export function RoomView({ room }: { room: Room }) {
       </main>
 
       {!bookInView && (
-        <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-stone-200 bg-[#fbfaf7]/95 backdrop-blur-md px-4 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
+        <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-stone-200 bg-[#fbfaf7]/95 backdrop-blur-md px-5 pt-3 pb-[max(12px,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
           <p className="text-[#1c2826] min-w-0">
             <span className="text-lg font-semibold">{room.formattedPrice}</span>
             <span className="text-xs text-stone-500"> / night</span>

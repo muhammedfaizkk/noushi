@@ -38,13 +38,13 @@ export function WhyUsSection() {
 
   return (
     <section id="why-us" className="py-20 md:py-28 bg-[#faf7f2] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto">
           <span className="text-xs uppercase tracking-widest text-accent font-semibold block mb-2">
             WHY BOOK WITH US &mdash;
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-normal tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-medium tracking-tight">
             Small details, taken care of.
           </h2>
         </div>
@@ -83,7 +83,7 @@ export function WhyUsSection() {
                 key={i}
                 className="text-center flex flex-col items-center justify-center min-w-0"
               >
-                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-accent tracking-tight">
+                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-accent tracking-tight">
                   {stat.number}
                 </div>
                 <div className="text-xs sm:text-sm text-stone-500 mt-2 font-normal">

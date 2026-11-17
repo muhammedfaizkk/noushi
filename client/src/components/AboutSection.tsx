@@ -5,7 +5,7 @@ import { Button } from "./ui/Button";
 export function AboutSection() {
   return (
     <section id="about" className="py-20 md:py-28 bg-[#f2ebe0] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Image with Floating WhatsApp Badge */}
           <div className="lg:col-span-6 relative pb-16 lg:pb-0">
@@ -50,7 +50,7 @@ export function AboutSection() {
               ABOUT US &mdash;
             </span>
 
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1c2826] font-normal leading-[1.2] tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1c2826] font-medium leading-[1.15] tracking-tight">
               Your next holiday starts with the right room.
             </h2>
 
