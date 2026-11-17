@@ -47,7 +47,7 @@ type ButtonAsLink = Shared &
     href: string;
   };
 
-export function Button({
+function LinkButton({
   variant,
   size,
   block,
@@ -56,27 +56,42 @@ export function Button({
   children,
   href,
   ...rest
-}: ButtonAsButton | ButtonAsLink) {
+}: ButtonAsLink) {
   const classes = buttonClassName({ variant, size, block, active, className });
 
-  if (href) {
-    if (href.startsWith("/")) {
-      return (
-        <Link href={href} className={classes} {...rest}>
-          {children}
-        </Link>
-      );
-    }
+  if (href.startsWith("/")) {
     return (
-      <a href={href} className={classes} {...rest}>
+      <Link href={href} className={classes} {...rest}>
         {children}
-      </a>
+      </Link>
     );
   }
 
+  return (
+    <a href={href} className={classes} {...rest}>
+      {children}
+    </a>
+  );
+}
+
+function NativeButton({
+  variant,
+  size,
+  block,
+  active,
+  className,
+  children,
+  ...rest
+}: ButtonAsButton) {
+  const classes = buttonClassName({ variant, size, block, active, className });
   return (
     <button className={classes} {...rest}>
       {children}
     </button>
   );
+}
+
+export function Button(props: ButtonAsButton | ButtonAsLink) {
+  if (typeof props.href === "string") return <LinkButton {...props} />;
+  return <NativeButton {...props} />;
 }
