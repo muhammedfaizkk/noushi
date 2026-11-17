@@ -120,14 +120,9 @@ export function Hero({ onSearch }: HeroProps) {
     <section aria-labelledby="ha-title" className="bg-[#FAF7F2] text-[#1F2A2E] overflow-x-clip">
       <div className="ha-wrap max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 pt-28 pb-16 md:pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:pt-24 max-[900px]:pb-10 max-[900px]:gap-5">
         <div className="ha-copy flex-1 min-w-0 max-w-[560px] flex flex-col gap-5 max-[900px]:max-w-none max-[900px]:gap-3.5">
-          <p className="ha-lead ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">
-            <span className="ha-live w-2 h-2 rounded-full bg-[#1E7A4C]" />
-            Hosts reply on WhatsApp
-          </p>
-
           <h1
             id="ha-title"
-            className="ha-in ha-d2 m-0 font-medium text-[2.625rem] leading-[1.05] tracking-[-0.02em] min-[901px]:text-[clamp(2.75rem,4.8vw,4.125rem)]"
+            className="ha-in ha-d1 m-0 font-medium text-[2.625rem] leading-[1.05] tracking-[-0.02em] min-[901px]:text-[clamp(2.75rem,4.8vw,4.125rem)]"
             style={{ fontFamily: "var(--font-fraunces), Georgia, serif" }}
           >
             Wake up

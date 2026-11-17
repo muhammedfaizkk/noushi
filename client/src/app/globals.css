@@ -205,7 +205,6 @@ dd {
 }
 @media (max-width: 640px) {
   .ha-copy { align-items: center; text-align: center; }
-  .ha-lead { align-self: center; }
   .ha-sub { max-width: 18.5rem; }
   .ha-word { left: 50%; translate: -50% 0; }
   .ha-search,
