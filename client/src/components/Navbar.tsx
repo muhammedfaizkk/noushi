@@ -71,7 +71,7 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
             Why Us
           </a>
           <a
-            href="/#contact"
+            href="/contact"
             className={light ? "hover:text-accent transition-colors" : "hover:text-white transition-colors tracking-wide"}
           >
             Contact
@@ -129,7 +129,7 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
             Why Us
           </a>
           <a
-            href="/#contact"
+            href="/contact"
             onClick={() => setMobileMenuOpen(false)}
             className={`py-3.5 text-sm font-medium ${light ? "" : "hover:text-white"}`}
           >
