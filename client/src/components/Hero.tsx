@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "./ui/Button";
 
@@ -9,13 +9,85 @@ interface HeroProps {
 }
 
 const WORDS = ["by the sea.", "in the hills.", "in a haveli.", "on an estate."];
-const PLACES = ["Kerala", "Karnataka", "Manali", "Jaipur", "Coorg"];
+const PLACES = ["Kerala", "Karnataka", "Manali", "Jaipur", "Coorg", "Goa", "Gokarna"];
 
-const LINE = "#D6CCBD";
+const SLIDES = [
+  {
+    id: "varkala",
+    city: "Varkala",
+    region: "Kerala",
+    image: "https://images.unsplash.com/photo-1535262412227-85541e910204?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "manali",
+    city: "Manali",
+    region: "Himachal",
+    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "jaipur",
+    city: "Jaipur",
+    region: "Rajasthan",
+    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "coorg",
+    city: "Coorg",
+    region: "Karnataka",
+    image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "goa",
+    city: "Goa",
+    region: "Fontainhas",
+    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "gokarna",
+    city: "Gokarna",
+    region: "Karnataka",
+    image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "udaipur",
+    city: "Udaipur",
+    region: "Rajasthan",
+    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "munnar",
+    city: "Munnar",
+    region: "Kerala",
+    image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "alleppey",
+    city: "Alleppey",
+    region: "Kerala",
+    image: "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: "rishikesh",
+    city: "Rishikesh",
+    region: "Uttarakhand",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=80",
+  },
+];
+
+function slideRole(index: number, active: number, total: number) {
+  if (index === active) return "center";
+  if (index === (active - 1 + total) % total) return "left";
+  if (index === (active + 1) % total) return "right";
+  return "hidden";
+}
 
 export function Hero({ onSearch }: HeroProps) {
   const [wordIndex, setWordIndex] = useState(0);
   const [query, setQuery] = useState("");
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const dragStart = useRef(0);
+  const dragging = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -25,10 +97,23 @@ export function Hero({ onSearch }: HeroProps) {
     return () => window.clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    if (paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      setActive((current) => (current + 1) % SLIDES.length);
+    }, 4200);
+    return () => window.clearInterval(id);
+  }, [paused]);
+
   const search = (event: React.FormEvent) => {
     event.preventDefault();
     onSearch({ destination: query.trim() || "Anywhere" });
     document.getElementById("rooms")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const go = (direction: -1 | 1) => {
+    setActive((current) => (current + direction + SLIDES.length) % SLIDES.length);
   };
 
   return (
@@ -117,51 +202,59 @@ export function Hero({ onSearch }: HeroProps) {
           </div>
         </div>
 
-        <div className="ha-stage flex-1 relative h-[560px] min-w-0 max-[900px]:w-full max-[900px]:flex-none" aria-hidden="true">
-          <svg viewBox="0 0 560 560" preserveAspectRatio="none" className="absolute inset-0 w-full h-full overflow-visible">
-            <path className="ha-route" d="M120 150 C 260 60, 420 120, 440 230 S 330 430, 220 450" fill="none" stroke={LINE} strokeWidth="2" />
-            <path className="ha-routeDash" d="M120 150 C 260 60, 420 120, 440 230 S 330 430, 220 450" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" />
-          </svg>
+        <div
+          className="ha-stage ha-in ha-d4 flex-1 relative h-[560px] min-w-0 max-[900px]:w-full max-[900px]:flex-none touch-pan-y"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onPointerDown={(event) => {
+            dragging.current = true;
+            dragStart.current = event.clientX;
+          }}
+          onPointerUp={(event) => {
+            if (!dragging.current) return;
+            dragging.current = false;
+            const delta = event.clientX - dragStart.current;
+            if (delta > 40) go(-1);
+            else if (delta < -40) go(1);
+          }}
+          onPointerCancel={() => {
+            dragging.current = false;
+          }}
+        >
+          <div className="ha-slider absolute inset-0" aria-roledescription="carousel" aria-label="Featured stays">
+            {SLIDES.map((slide, index) => {
+              const role = slideRole(index, active, SLIDES.length);
+              return (
+                <figure
+                  key={slide.id}
+                  className={`ha-slide ha-slide-${role} m-0 px-2 pt-2 pb-3 bg-white rounded-[22px] shadow-[0_20px_40px_rgba(31,42,46,0.16)]`}
+                  aria-hidden={role !== "center"}
+                >
+                  <div className="ha-slide-media relative overflow-hidden rounded-[14px]">
+                    <Image
+                      src={slide.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 900px) 60vw, 320px"
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                  <figcaption className="px-1.5 pt-2.5 flex justify-between gap-2 text-[13px] text-[#1F2A2E]">
+                    <strong className="font-semibold">{slide.city}</strong>
+                    <span className="text-[#5B6468]">{slide.region}</span>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
 
-          <figure className="ha-cardA absolute left-0 top-[30px] w-[46%] m-0 px-2 pt-2 pb-3 bg-white rounded-2xl shadow-[0_24px_48px_rgba(31,42,46,0.18)]">
-            <div className="aspect-[4/5] rounded-[10px] overflow-hidden relative">
-              <Image src="https://images.unsplash.com/photo-1535262412227-85541e910204?auto=format&fit=crop&w=900&q=80" alt="" fill sizes="280px" className="ha-kb object-cover" priority />
-            </div>
-            <figcaption className="px-1 pt-2.5 flex justify-between gap-2 text-[13px] text-[#1F2A2E]">
-              <strong>Varkala</strong>
-              <span className="text-[#5B6468]">Kerala</span>
-            </figcaption>
-          </figure>
-
-          <figure className="ha-cardB absolute right-0 top-[120px] w-[40%] m-0 px-2 pt-2 pb-3 bg-white rounded-2xl shadow-[0_24px_48px_rgba(31,42,46,0.18)]">
-            <div className="aspect-square rounded-[10px] overflow-hidden relative">
-              <Image src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=80" alt="" fill sizes="240px" className="ha-kb object-cover [animation-delay:-4s]" />
-            </div>
-            <figcaption className="px-1 pt-2.5 flex justify-between gap-2 text-[13px] text-[#1F2A2E]">
-              <strong>Manali</strong>
-              <span className="text-[#5B6468]">Himachal</span>
-            </figcaption>
-          </figure>
-
-          <figure className="ha-cardC absolute left-[24%] bottom-0 w-[42%] m-0 px-2 pt-2 pb-3 bg-white rounded-2xl shadow-[0_24px_48px_rgba(31,42,46,0.18)]">
-            <div className="aspect-[16/10] rounded-[10px] overflow-hidden relative">
-              <Image src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80" alt="" fill sizes="260px" className="ha-kb object-cover [animation-delay:-8s]" />
-            </div>
-            <figcaption className="px-1 pt-2.5 flex justify-between gap-2 text-[13px] text-[#1F2A2E]">
-              <strong>Jaipur</strong>
-              <span className="text-[#5B6468]">Rajasthan</span>
-            </figcaption>
-          </figure>
-
-          <span className="ha-pin ha-pin1 absolute left-[19%] top-[24%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
-          <span className="ha-pin ha-pin2 absolute left-[77%] top-[39%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
-          <span className="ha-pin ha-pin3 absolute left-[38%] top-[79%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
-
-          <div className="ha-badge ha-b1 absolute left-[34%] top-[4%] flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] shadow-[0_12px_28px_rgba(31,42,46,0.14)] text-[13px] whitespace-nowrap">
+          <div className="ha-badge ha-b1 absolute left-1/2 -translate-x-1/2 bottom-2 z-20 flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#FFFDF9] shadow-[0_12px_28px_rgba(31,42,46,0.14)] text-[13px] whitespace-nowrap">
             <span className="font-semibold">From ₹2,400</span>
             <span className="text-[#5B6468]">/ night</span>
           </div>
-          <div className="ha-badge ha-b2 absolute right-[2%] bottom-[14%] flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] shadow-[0_12px_28px_rgba(31,42,46,0.14)] text-[13px] whitespace-nowrap">
+
+          <div className="ha-badge ha-b2 absolute right-[4%] bottom-[18%] z-20 flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] shadow-[0_12px_28px_rgba(31,42,46,0.14)] text-[13px] whitespace-nowrap max-[900px]:hidden">
             <span className="w-[26px] h-[26px] rounded-lg bg-[#E5F2EA] text-[#1E7A4C] inline-flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12l5 5L19 7" />

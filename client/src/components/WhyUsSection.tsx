@@ -50,24 +50,23 @@ export function WhyUsSection() {
         </div>
 
         {/* 4 Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 sm:mt-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mt-10 sm:mt-16">
           {features.map((feature, i) => {
             const Icon = feature.icon;
             return (
               <div
                 key={i}
-                className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow duration-200 flex flex-col justify-start"
+                className="bg-white rounded-2xl p-4 sm:p-7 border border-stone-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow duration-200 flex flex-col justify-start min-w-0"
               >
-                {/* Icon in subtle light teal rounded circle */}
-                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-5">
-                  <Icon size={20} strokeWidth={1.8} />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-3 sm:mb-5">
+                  <Icon size={18} strokeWidth={1.8} />
                 </div>
 
-                <h3 className="font-sans text-base font-semibold text-stone-900 tracking-tight">
+                <h3 className="font-sans text-sm sm:text-base font-semibold text-stone-900 tracking-tight">
                   {feature.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-stone-500 mt-2.5 leading-relaxed">
+                <p className="text-[11px] sm:text-sm text-stone-500 mt-2 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
