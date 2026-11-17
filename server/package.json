@@ -2,10 +2,10 @@
   "name": "boorooms-backend",
   "version": "1.0.0",
   "description": "Express Backend for Boorooms / Driftwood Stays (api & admin)",
-  "main": "server.js",
+  "main": "api/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node api/server.js",
+    "dev": "node api/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -41,7 +41,7 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
       }`}
     >
       <div className={`mx-auto grid grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-3 ${
-        light ? "max-w-[1240px] px-4 md:px-6" : "max-w-7xl px-4 sm:px-6 lg:px-8"
+        light ? "max-w-[1240px] px-5 md:px-6" : "max-w-7xl px-5 sm:px-6 lg:px-8"
       }`}>
         {/* Logo */}
         <a href="/" className="flex items-center justify-self-start min-w-0">

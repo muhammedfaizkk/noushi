@@ -9,17 +9,27 @@ Boutique homestay booking platform across India with customer storefront, admin 
 ```
 boorooms/
 ├── client/                   # Customer storefront Next.js app (Port 3000)
-├── server/                   # Express server (Port 5000)
-│   ├── server.js             # Server entry point & health check
-│   ├── api/                  # API routes, controllers, services, middleware
-│   ├── data/                 # Storefront data store
+├── server/
+│   ├── api/                  # Express API (Port 5000)
+│   │   ├── server.js         # Entry point
+│   │   ├── routes/
+│   │   └── controllers/
 │   └── admin/                # Admin Next.js app (Port 3001)
-└── package.json              # Monorepo runner
+└── package.json              # Monorepo runner (concurrently)
 ```
 
 ---
 
 ## Quick Start
+
+Install each app once:
+
+```bash
+npm install
+npm install --prefix client
+npm install --prefix server
+npm install --prefix server/admin
+```
 
 ### 1. Run Everything (Storefront + Admin + API)
 ```bash

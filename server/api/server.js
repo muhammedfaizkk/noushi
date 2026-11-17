@@ -2,9 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// Storefront API Router
-const apiRouter = require("./api");
-const { roomsStore, bookingsStore } = require("./data/initialData");
+const apiRouter = require("./routes");
 
 dotenv.config();
 
@@ -21,22 +19,7 @@ app.use(
 );
 app.use(express.json());
 
-// ==========================================
-// 1. HEALTH CHECK
-// ==========================================
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "healthy",
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
-    totalRooms: roomsStore.length,
-    totalBookings: bookingsStore.length,
-  });
-});
-
-// ==========================================
-// 2. STOREFRONT API ROUTES (/api/...)
-// ==========================================
+// Storefront API (/api/health, and future routes)
 app.use("/api", apiRouter);
 
 // Start Server
@@ -47,7 +30,6 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`  Running on http://localhost:${PORT}`);
     console.log(`======================================================`);
     console.log(`  Health Check:  GET  http://localhost:${PORT}/api/health`);
-    console.log(`  Storefront API:GET  http://localhost:${PORT}/api/rooms`);
     console.log(`======================================================\n`);
   });
 }

@@ -33,7 +33,7 @@ export function Hero({ onSearch }: HeroProps) {
 
   return (
     <section aria-labelledby="ha-title" className="bg-[#FAF7F2] text-[#1F2A2E] overflow-x-clip">
-      <div className="ha-wrap max-w-[1240px] mx-auto px-6 pt-28 pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:px-4 max-[900px]:pt-[72px] max-[900px]:pb-8 max-[900px]:gap-6">
+      <div className="ha-wrap max-w-[1240px] mx-auto px-6 pt-28 pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:px-5 max-[900px]:pt-[72px] max-[900px]:pb-8 max-[900px]:gap-6">
         <div className="ha-copy flex-1 min-w-0 max-w-[560px] flex flex-col gap-5 max-[900px]:max-w-none max-[900px]:gap-3.5">
           <p className="ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">
             <span className="ha-live w-2 h-2 rounded-full bg-[#1E7A4C]" />

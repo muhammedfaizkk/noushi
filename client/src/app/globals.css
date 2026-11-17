@@ -266,9 +266,9 @@ dd {
 }
 @media (max-width: 480px) {
   .ha-stage { height: 292px !important; }
-  .ha-cardA { width: 54% !important; left: 23% !important; }
-  .ha-cardB { width: 42% !important; left: -2px !important; }
-  .ha-cardC { width: 42% !important; right: -12% !important; }
+  .ha-cardA { width: 54% !important; left: 23% !important; right: auto !important; }
+  .ha-cardB { width: 42% !important; left: -60px !important; right: auto !important; }
+  .ha-cardC { width: 42% !important; left: auto !important; right: -60px !important; }
   .ha-b1 { bottom: -8px !important; }
   .ha-b2 { display: none !important; }
   .ha-searchbtn {
@@ -281,10 +281,10 @@ dd {
   .ha-chips {
     flex-wrap: nowrap !important;
     overflow-x: auto;
-    margin-left: -16px;
-    margin-right: -16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
     scrollbar-width: none;
   }
   .ha-chips::-webkit-scrollbar { display: none; }
