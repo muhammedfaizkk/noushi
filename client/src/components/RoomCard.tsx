@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Heart } from "lucide-react";
 import { Room } from "@/data/rooms";
+import { Button } from "./ui/Button";
 
 export function RoomCard({ room }: { room: Room }) {
   const [liked, setLiked] = useState(false);
@@ -53,7 +53,7 @@ export function RoomCard({ room }: { room: Room }) {
         <div>
           {/* Title & Number */}
           <div className="flex items-baseline justify-between gap-2">
-            <h3 className="font-serif text-[17px] font-medium text-[#1c2826] tracking-tight group-hover:text-[#144e47] transition-colors line-clamp-1">
+            <h3 className="font-serif text-[17px] font-medium text-ink tracking-tight group-hover:text-accent transition-colors line-clamp-1">
               {room.title}
             </h3>
             <span className="text-xs font-mono text-stone-400 whitespace-nowrap">
@@ -89,12 +89,9 @@ export function RoomCard({ room }: { room: Room }) {
             <span className="text-xs text-stone-500 font-normal"> / night</span>
           </div>
 
-          <Link
-            href={`/rooms/${room.id}`}
-            className="shrink-0 bg-[#144e47] hover:bg-[#0e3b35] text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors duration-150 shadow-sm"
-          >
+          <Button href={`/rooms/${room.id}`} size="sm" className="shrink-0">
             View room
-          </Link>
+          </Button>
         </div>
       </div>
     </div>

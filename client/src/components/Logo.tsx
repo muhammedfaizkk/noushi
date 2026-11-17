@@ -15,7 +15,7 @@ export function Logo({
         className={`w-7 h-7 rounded-full border flex items-center justify-center transition-transform hover:scale-105 ${
           isLight
             ? "border-white/80 text-white"
-            : "border-[#144e47] text-[#144e47]"
+            : "border-accent text-accent"
         }`}
       >
         <svg
@@ -36,7 +36,7 @@ export function Logo({
 
       <span
         className={`font-sans tracking-tight text-base font-medium ${
-          isLight ? "text-white" : "text-[#1c2826]"
+          isLight ? "text-white" : "text-ink"
         }`}
       >
         Driftwood Stays

@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { ROOMS } from "@/data/rooms";
 import { RoomCard } from "./RoomCard";
+import { Button } from "./ui/Button";
 import { ChevronDown } from "lucide-react";
 
 interface RoomsSectionProps {
@@ -58,7 +59,7 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-stone-200/60">
           <div>
-            <span className="text-xs uppercase tracking-widest text-[#144e47] font-semibold block mb-2">
+            <span className="text-xs uppercase tracking-widest text-accent font-semibold block mb-2">
               OUR ROOMS &mdash;
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-normal tracking-tight">
@@ -71,14 +72,16 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
 
           {/* Sort Dropdown */}
           <div className="relative self-start md:self-auto">
-            <button
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
               onClick={() => setSortOpen(!sortOpen)}
-              className="text-xs sm:text-sm text-stone-600 bg-white border border-stone-200/90 rounded-lg px-3.5 py-2 flex items-center gap-2 hover:border-stone-400 transition cursor-pointer shadow-2xs"
             >
               <span className="text-stone-400">Sort by:</span>
               <span className="font-medium text-stone-800">{sortLabel}</span>
               <ChevronDown size={14} className="text-stone-400" />
-            </button>
+            </Button>
 
             {sortOpen && (
               <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-xl shadow-lg border border-stone-200 py-1.5 z-20 animate-in fade-in zoom-in-95 duration-100">
@@ -88,7 +91,7 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
                     setSortOpen(false);
                   }}
                   className={`w-full text-left px-3.5 py-2 text-xs font-medium hover:bg-stone-50 transition ${
-                    sortBy === "featured" ? "text-[#144e47] font-semibold" : "text-stone-700"
+                    sortBy === "featured" ? "text-accent font-semibold" : "text-stone-700"
                   }`}
                 >
                   Featured
@@ -99,7 +102,7 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
                     setSortOpen(false);
                   }}
                   className={`w-full text-left px-3.5 py-2 text-xs font-medium hover:bg-stone-50 transition ${
-                    sortBy === "price-asc" ? "text-[#144e47] font-semibold" : "text-stone-700"
+                    sortBy === "price-asc" ? "text-accent font-semibold" : "text-stone-700"
                   }`}
                 >
                   Price: Low to High
@@ -110,7 +113,7 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
                     setSortOpen(false);
                   }}
                   className={`w-full text-left px-3.5 py-2 text-xs font-medium hover:bg-stone-50 transition ${
-                    sortBy === "price-desc" ? "text-[#144e47] font-semibold" : "text-stone-700"
+                    sortBy === "price-desc" ? "text-accent font-semibold" : "text-stone-700"
                   }`}
                 >
                   Price: High to Low
@@ -125,17 +128,17 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
           {categories.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
-              <button
+              <Button
                 key={cat}
+                type="button"
+                variant="chip"
+                size="sm"
+                active={isActive}
+                aria-pressed={isActive}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                  isActive
-                    ? "bg-[#144e47] text-white shadow-sm"
-                    : "bg-white/80 text-stone-600 hover:bg-white hover:text-stone-900 border border-stone-200/70"
-                }`}
               >
                 {cat}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -155,14 +158,14 @@ export function RoomsSection({ searchFilter }: RoomsSectionProps) {
             <p className="text-xs text-stone-500 mt-1">
               Try adjusting your category filter or search criteria.
             </p>
-            <button
-              onClick={() => {
-                setSelectedCategory("All");
-              }}
-              className="mt-4 bg-[#144e47] text-white text-xs px-4 py-2 rounded-lg font-medium"
+            <Button
+              type="button"
+              size="sm"
+              className="mt-4"
+              onClick={() => setSelectedCategory("All")}
             >
               Reset filters
-            </button>
+            </Button>
           </div>
         )}
       </div>

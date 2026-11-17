@@ -48,7 +48,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${redHatDisplay.variable} ${redHatText.variable} ${redHatMono.variable} ${fraunces.variable} scroll-smooth antialiased`}
     >
-      <body className="min-h-screen bg-[#faf7f2] text-[#1c2826] font-sans selection:bg-[#144e47] selection:text-white">
+      <body className="min-h-screen bg-cream text-ink font-sans selection:bg-accent selection:text-white">
         {children}
       </body>
     </html>

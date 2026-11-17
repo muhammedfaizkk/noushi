@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
-import { ROOMS } from "@/data/rooms";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { REELS, reelEmbedUrl } from "@/data/reels";
 
 const GAP = 16;
 
 function cardsPerView(width: number) {
-  if (width >= 1024) return 4;
+  if (width >= 1024) return 3;
   if (width >= 640) return 2;
   return 1;
 }
 
 export function StaysInMotion() {
-  const clips = ROOMS;
+  const clips = REELS;
   const viewportRef = useRef<HTMLDivElement>(null);
   const [perView, setPerView] = useState(1);
   const [cardWidth, setCardWidth] = useState(0);
@@ -56,7 +54,7 @@ export function StaysInMotion() {
     const id = window.setInterval(() => {
       setAnimate(true);
       setIndex((current) => (current >= clips.length ? current : current + 1));
-    }, 4000);
+    }, 6000);
 
     return () => window.clearInterval(id);
   }, [paused, perView, cardWidth, clips.length]);
@@ -102,14 +100,14 @@ export function StaysInMotion() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
-            <span className="text-xs uppercase tracking-widest text-[#144e47] font-semibold block mb-2">
+            <span className="text-xs uppercase tracking-widest text-accent font-semibold block mb-2">
               Stays in motion
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl text-[#1c2826] font-normal tracking-tight">
               See the stays in motion
             </h2>
             <p className="mt-2 text-sm text-stone-500 max-w-lg">
-              A short look at the rooms, the light, and the places around them.
+              Instagram reels from the road, playing right here.
             </p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
@@ -142,29 +140,21 @@ export function StaysInMotion() {
               transition: animate ? "transform 500ms ease" : "none",
             }}
           >
-            {slides.map((room, slideIndex) => (
-              <Link
-                key={`${room.id}-${slideIndex}`}
-                href={`/rooms/${room.id}`}
-                className="group relative shrink-0 aspect-[3/4] rounded-2xl overflow-hidden bg-stone-200"
+            {slides.map((reel, slideIndex) => (
+              <div
+                key={`${reel.id}-${slideIndex}`}
+                className="shrink-0 overflow-hidden rounded-2xl border border-stone-200 bg-white"
                 style={{ width: cardWidth || undefined, flexBasis: cardWidth || undefined }}
               >
-                <Image
-                  src={room.image}
-                  alt={room.title}
-                  fill
-                  sizes="(max-width: 640px) 90vw, 280px"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                <iframe
+                  src={reelEmbedUrl(reel.shortcode)}
+                  title={`${reel.title}, ${reel.location}`}
+                  loading="lazy"
+                  scrolling="no"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  className="block w-full h-[540px] border-0 bg-white"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 text-[#1c2422] flex items-center justify-center shadow-md">
-                  <Play size={18} className="ml-0.5 fill-current" />
-                </span>
-                <span className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <span className="block text-sm font-medium leading-snug">{room.title}</span>
-                  <span className="block text-xs text-white/80 mt-0.5">{room.location}</span>
-                </span>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Logo } from "./Logo";
+import { Button } from "./ui/Button";
 
 export function Footer() {
   return (
@@ -14,12 +15,9 @@ export function Footer() {
               <br />
               City, State, PIN
             </p>
-            <a
-              href="/#rooms"
-              className="mt-5 inline-block bg-[#144e47] hover:bg-[#1b5f56] text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors border border-[#1e6a60]"
-            >
+            <Button href="/#rooms" size="sm" className="mt-5">
               Book now
-            </a>
+            </Button>
           </div>
 
           {/* Column 2: Quick Links */}

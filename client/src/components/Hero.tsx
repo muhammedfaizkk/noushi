@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { Button } from "./ui/Button";
 
 interface HeroProps {
   onSearch: (filters: { destination: string }) => void;
@@ -10,9 +11,6 @@ interface HeroProps {
 const WORDS = ["by the sea.", "in the hills.", "in a haveli.", "on an estate."];
 const PLACES = ["Kerala", "Karnataka", "Manali", "Jaipur", "Coorg"];
 
-const ACCENT = "#1F6F6B";
-const INK = "#1F2A2E";
-const SURFACE = "#FFFDF9";
 const LINE = "#D6CCBD";
 
 export function Hero({ onSearch }: HeroProps) {
@@ -37,7 +35,7 @@ export function Hero({ onSearch }: HeroProps) {
     <section aria-labelledby="ha-title" className="bg-[#FAF7F2] text-[#1F2A2E] overflow-x-clip">
       <div className="ha-wrap max-w-[1240px] mx-auto px-6 pt-28 pb-20 flex items-center gap-14 max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:px-4 max-[900px]:pt-[72px] max-[900px]:pb-8 max-[900px]:gap-6">
         <div className="ha-copy flex-1 min-w-0 max-w-[560px] flex flex-col gap-5 max-[900px]:max-w-none max-[900px]:gap-3.5">
-          <p className="ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-[#1F6F6B] text-[13px] font-semibold">
+          <p className="ha-in ha-d1 m-0 inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-[#E3EFEE] text-accent text-[13px] font-semibold">
             <span className="ha-live w-2 h-2 rounded-full bg-[#1E7A4C]" />
             Hosts reply on WhatsApp
           </p>
@@ -56,7 +54,7 @@ export function Hero({ onSearch }: HeroProps) {
                 return (
                   <em
                     key={text}
-                    className="ha-word absolute left-0 top-0 whitespace-nowrap italic text-[#1F6F6B]"
+                    className="ha-word absolute left-0 top-0 whitespace-nowrap italic text-accent"
                     aria-hidden={visible ? undefined : true}
                     style={{ opacity: visible ? 1 : 0, transform: `translateY(${y})` }}
                   >
@@ -76,7 +74,7 @@ export function Hero({ onSearch }: HeroProps) {
             onSubmit={search}
             className="ha-in ha-d4 flex items-center gap-1.5 py-1.5 pr-1.5 pl-[18px] rounded-2xl bg-[#FFFDF9] border border-[#D6CCBD] shadow-[0_12px_30px_rgba(31,42,46,0.08)]"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
               <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" />
               <circle cx="12" cy="9.5" r="2.5" />
             </svg>
@@ -90,36 +88,29 @@ export function Hero({ onSearch }: HeroProps) {
               placeholder="Where to? Kerala, Manali, Jaipur…"
               className="flex-1 min-w-0 min-h-12 border-0 bg-transparent text-[#1F2A2E] text-base outline-none placeholder:text-[#8A9296]"
             />
-            <button
-              type="submit"
-              className="ha-cta ha-searchbtn shrink-0 min-h-12 min-w-12 inline-flex items-center justify-center gap-2 px-5 rounded-xl bg-[#1F6F6B] text-white font-semibold"
-            >
+            <Button type="submit" size="lg" className="ha-cta ha-searchbtn shrink-0">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="7" />
                 <path d="M20 20l-3.5-3.5" />
               </svg>
               <span className="ha-btntext">Find rooms</span>
-            </button>
+            </Button>
           </form>
 
           <div className="ha-in ha-d5 ha-chips flex flex-wrap gap-2" role="group" aria-label="Popular destinations">
             {PLACES.map((place) => {
               const selected = query.trim().toLowerCase() === place.toLowerCase();
               return (
-                <button
+                <Button
                   key={place}
                   type="button"
-                  className="ha-chip min-h-10 px-3.5 rounded-full border text-sm font-medium whitespace-nowrap cursor-pointer"
+                  variant="chip"
+                  active={selected}
                   aria-pressed={selected}
                   onClick={() => setQuery(place)}
-                  style={{
-                    background: selected ? ACCENT : SURFACE,
-                    color: selected ? "#FFFFFF" : INK,
-                    borderColor: selected ? ACCENT : LINE,
-                  }}
                 >
                   {place}
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -128,7 +119,7 @@ export function Hero({ onSearch }: HeroProps) {
         <div className="ha-stage flex-1 relative h-[560px] min-w-0 max-[900px]:w-full max-[900px]:flex-none" aria-hidden="true">
           <svg viewBox="0 0 560 560" preserveAspectRatio="none" className="absolute inset-0 w-full h-full overflow-visible">
             <path className="ha-route" d="M120 150 C 260 60, 420 120, 440 230 S 330 430, 220 450" fill="none" stroke={LINE} strokeWidth="2" />
-            <path className="ha-routeDash" d="M120 150 C 260 60, 420 120, 440 230 S 330 430, 220 450" fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" />
+            <path className="ha-routeDash" d="M120 150 C 260 60, 420 120, 440 230 S 330 430, 220 450" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
 
           <figure className="ha-cardA absolute left-0 top-[30px] w-[46%] m-0 px-2 pt-2 pb-3 bg-white rounded-2xl shadow-[0_24px_48px_rgba(31,42,46,0.18)]">
@@ -161,9 +152,9 @@ export function Hero({ onSearch }: HeroProps) {
             </figcaption>
           </figure>
 
-          <span className="ha-pin ha-pin1 absolute left-[19%] top-[24%] w-[18px] h-[18px] rounded-full bg-[#1F6F6B] border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
-          <span className="ha-pin ha-pin2 absolute left-[77%] top-[39%] w-[18px] h-[18px] rounded-full bg-[#1F6F6B] border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
-          <span className="ha-pin ha-pin3 absolute left-[38%] top-[79%] w-[18px] h-[18px] rounded-full bg-[#1F6F6B] border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
+          <span className="ha-pin ha-pin1 absolute left-[19%] top-[24%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
+          <span className="ha-pin ha-pin2 absolute left-[77%] top-[39%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
+          <span className="ha-pin ha-pin3 absolute left-[38%] top-[79%] w-[18px] h-[18px] rounded-full bg-accent border-[3px] border-white shadow-[0_4px_10px_rgba(0,0,0,0.2)]" />
 
           <div className="ha-badge ha-b1 absolute left-[34%] top-[4%] flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFDF9] shadow-[0_12px_28px_rgba(31,42,46,0.14)] text-[13px] whitespace-nowrap">
             <span className="font-semibold">From ₹2,400</span>

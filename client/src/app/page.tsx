@@ -17,7 +17,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] flex flex-col font-sans">
+    <div className="min-h-screen bg-cream flex flex-col font-sans">
       {/* Navigation Bar */}
       <Navbar variant="light" />
 

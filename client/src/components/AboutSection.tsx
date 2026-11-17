@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { Button } from "./ui/Button";
 
 export function AboutSection() {
   return (
@@ -45,7 +46,7 @@ export function AboutSection() {
 
           {/* Right Column: Editorial Copy & CTA */}
           <div className="lg:col-span-6 lg:pl-6 pt-4 sm:pt-0">
-            <span className="text-xs uppercase tracking-widest text-[#144e47] font-semibold block mb-3">
+            <span className="text-xs uppercase tracking-widest text-accent font-semibold block mb-3">
               ABOUT US &mdash;
             </span>
 
@@ -61,12 +62,7 @@ export function AboutSection() {
             </p>
 
             <div className="mt-8">
-              <a
-                href="#rooms"
-                className="inline-flex items-center justify-center bg-[#144e47] hover:bg-[#0e3b35] text-white text-sm font-medium px-6 py-3 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer"
-              >
-                Explore rooms
-              </a>
+              <Button href="#rooms">Explore rooms</Button>
             </div>
           </div>
         </div>

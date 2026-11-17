@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { Navbar } from "./Navbar";
+import { Button } from "./ui/Button";
 import { Room } from "@/data/rooms";
 
 function isoDate(date: Date) {
@@ -237,7 +238,7 @@ export function RoomView({ room }: { room: Room }) {
                 return (
                   <div key={item.title} className="min-w-0 bg-white border border-stone-200/80 rounded-xl px-4 py-3.5">
                     <p className="text-sm font-semibold text-stone-900 inline-flex items-center gap-1.5">
-                      <Icon size={15} className="text-[#144e47]" />
+                      <Icon size={15} className="text-accent" />
                       {item.title}
                     </p>
                     <p className="text-xs text-stone-500 mt-1 leading-relaxed">{item.text}</p>
@@ -258,7 +259,7 @@ export function RoomView({ room }: { room: Room }) {
               <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-8 max-w-xl">
                 {offers.map((offer) => (
                   <li key={offer} className="flex items-center gap-2 text-sm text-stone-700">
-                    <Check size={15} className="text-[#1e7a46] shrink-0" />
+                    <Check size={15} className="text-accent shrink-0" />
                     {offer}
                   </li>
                 ))}
@@ -295,7 +296,7 @@ export function RoomView({ room }: { room: Room }) {
                   : `${room.location}. Cafes and the neighbourhood are a short walk away.`}
               </p>
               <div className="mt-3 h-36 sm:h-44 rounded-2xl border border-stone-200 bg-[#ebe6dc] flex items-center justify-center gap-2 text-sm text-stone-600">
-                <MapPin size={16} className="text-[#144e47]" />
+                <MapPin size={16} className="text-accent" />
                 {room.location}
               </div>
             </section>
@@ -387,15 +388,10 @@ export function RoomView({ room }: { room: Room }) {
               )}
             </p>
 
-            <button
-              type="button"
-              onClick={book}
-              disabled={nights < 1}
-              className="mt-3 w-full bg-[#1e7a46] hover:bg-[#18663a] disabled:opacity-50 text-white text-sm font-medium min-h-11 rounded-lg inline-flex items-center justify-center gap-2"
-            >
+            <Button type="button" block className="mt-3" onClick={book} disabled={nights < 1}>
               <WhatsAppIcon />
               Book via WhatsApp
-            </button>
+            </Button>
             <p className="mt-2 text-center text-[11px] text-stone-500">
               No payment now. The host confirms on WhatsApp.
             </p>
@@ -409,14 +405,15 @@ export function RoomView({ room }: { room: Room }) {
             <span className="text-lg font-semibold">{room.formattedPrice}</span>
             <span className="text-xs text-stone-500"> / night</span>
           </p>
-          <button
+          <Button
             type="button"
+            size="sm"
+            className="shrink-0"
             onClick={() => bookRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-            className="shrink-0 bg-[#1e7a46] text-white text-sm font-medium px-4 min-h-11 rounded-lg inline-flex items-center gap-2"
           >
             <WhatsAppIcon />
             Book
-          </button>
+          </Button>
         </div>
       )}
 

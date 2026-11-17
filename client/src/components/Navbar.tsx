@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Logo } from "./Logo";
+import { Button } from "./ui/Button";
 import { Menu, X } from "lucide-react";
 
 interface NavbarProps {
@@ -53,25 +54,25 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
         }`}>
           <a
             href="/#rooms"
-            className={light ? "hover:text-[#1F6F6B] transition-colors" : "hover:text-white transition-colors tracking-wide"}
+            className={light ? "hover:text-accent transition-colors" : "hover:text-white transition-colors tracking-wide"}
           >
             Rooms
           </a>
           <a
             href="/#about"
-            className={light ? "hover:text-[#1F6F6B] transition-colors" : "hover:text-white transition-colors tracking-wide"}
+            className={light ? "hover:text-accent transition-colors" : "hover:text-white transition-colors tracking-wide"}
           >
             About
           </a>
           <a
             href="/#why-us"
-            className={light ? "hover:text-[#1F6F6B] transition-colors" : "hover:text-white transition-colors tracking-wide"}
+            className={light ? "hover:text-accent transition-colors" : "hover:text-white transition-colors tracking-wide"}
           >
             Why Us
           </a>
           <a
             href="/#contact"
-            className={light ? "hover:text-[#1F6F6B] transition-colors" : "hover:text-white transition-colors tracking-wide"}
+            className={light ? "hover:text-accent transition-colors" : "hover:text-white transition-colors tracking-wide"}
           >
             Contact
           </a>
@@ -79,34 +80,14 @@ export function Navbar({ variant = "overlay" }: NavbarProps) {
 
         {/* Right CTA */}
         <div className="hidden md:flex items-center justify-self-end">
-          <a
-            href="/#rooms"
-            className={
-              light
-                ? "ha-cta bg-[#1F6F6B] hover:bg-[#16524F] text-white text-sm font-semibold px-5 min-h-11 inline-flex items-center rounded-full"
-                : onPhoto
-                  ? "bg-white text-[#1c2422] hover:bg-stone-100 text-sm font-medium px-4 py-2 rounded-lg"
-                  : "bg-[#144e47] hover:bg-[#0e3b35] text-white text-sm font-medium px-5 py-2.5 rounded-lg"
-            }
-          >
-            Book now
-          </a>
+          <Button href="/#rooms">Book now</Button>
         </div>
 
         {/* Mobile menu button */}
         <div className="flex md:hidden items-center justify-self-end gap-3">
-          <a
-            href="/#rooms"
-            className={
-              light
-                ? "bg-[#1F6F6B] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full"
-                : onPhoto
-                  ? "bg-white text-[#1c2422] text-xs font-medium px-3.5 py-1.5 rounded-lg"
-                  : "bg-[#144e47] text-white text-xs font-medium px-3.5 py-1.5 rounded-lg"
-            }
-          >
+          <Button href="/#rooms" size="sm">
             Book now
-          </a>
+          </Button>
           {!light && (
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
