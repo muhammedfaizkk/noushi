@@ -8,26 +8,12 @@ Boutique homestay booking platform across India with customer storefront, admin 
 
 ```
 boorooms/
-├── backend/                  # Express REST API (Port 5000) for Storefront
+├── client/                   # Customer storefront Next.js app (Port 3000)
+├── server/                   # Express server (Port 5000)
 │   ├── server.js             # Server entry point & health check
-│   ├── api/                  # Layered Storefront API (routes, controllers, services, middleware)
-│   └── data/                 # Storefront data store
-│
-├── frontend/
-│   └── client/               # Customer Storefront Next.js App (Port 3000)
-│
-├── admin/                    # Standalone Admin Full-Stack Next.js Project (Port 3001)
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── api/          # Built-in Next.js Backend (stats, rooms, bookings Route Handlers)
-│   │   │   ├── rooms/        # Rooms UI
-│   │   │   ├── bookings/     # Bookings & WhatsApp UI
-│   │   │   └── page.tsx      # Executive Dashboard
-│   │   ├── components/       # Admin Sidebar & Header
-│   │   ├── data/             # Admin data store
-│   │   └── lib/              # API client
-│   └── package.json
-│
+│   ├── api/                  # API routes, controllers, services, middleware
+│   ├── data/                 # Storefront data store
+│   └── admin/                # Admin Next.js app (Port 3001)
 └── package.json              # Monorepo runner
 ```
 
@@ -45,7 +31,7 @@ npm run dev
 | :--- | :--- | :--- |
 | **Storefront** | [http://localhost:3000](http://localhost:3000) | `3000` |
 | **Admin Console** | [http://localhost:3001](http://localhost:3001) | `3001` |
-| **Express Backend** | [http://localhost:5000/api/health](http://localhost:5000/api/health) | `5000` |
+| **Server API** | [http://localhost:5000/api/health](http://localhost:5000/api/health) | `5000` |
 
 ---
 
@@ -53,7 +39,7 @@ npm run dev
 
 - **Storefront:** `npm run dev:client`
 - **Admin Console:** `npm run dev:admin`
-- **Backend API:** `npm run dev:backend`
+- **Server API:** `npm run dev:server`
 
 ---
 
@@ -62,4 +48,4 @@ npm run dev
 ```bash
 npm run build
 ```
-*(Builds both `frontend/client` and `frontend/admin`)*
+*(Builds both `client` and `server/admin`)*

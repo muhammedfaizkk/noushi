@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-red-hat-display), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-red-hat-display), ui-sans-serif, system-ui, sans-serif;
+  --font-text: var(--font-red-hat-text), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-red-hat-mono), ui-monospace, monospace;
+}
+
+body {
+  font-family: var(--font-red-hat-display), ui-sans-serif, system-ui, sans-serif;
+  background-color: #f5f4ef;
+  color: #1c2826;
+}
+
+p,
+li,
+label,
+input,
+textarea,
+select,
+dt,
+dd {
+  font-family: var(--font-red-hat-text), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ede4;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
